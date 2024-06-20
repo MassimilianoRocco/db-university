@@ -16,4 +16,49 @@ UPDATE teachers
 SET office_number = 126
 WHERE name='Pietro' AND surname= 'Rizzo';
 
-Eliminare dalla tabella studenti il record creato precedentemente al punto 9 => DELETE FROM students WHERE name="Massimiliano" AND surname="Rocco" AND email='massi1993@hotmail.it';
+Eliminare dalla tabella studenti il record creato precedentemente al punto 9 => 
+DELETE FROM students WHERE name="Massimiliano" AND surname="Rocco" AND email='massi1993@hotmail.it';
+
+// GROUP BY //
+1. Contare quanti iscritti ci sono stati ogni anno => SELECT COUNT(*) FROM students GROUP BY YEAR(enrolment_date);
+2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio => 
+SELECT COUNT(*), office_address
+FROM teachers
+GROUP BY office_address;
+3. Calcolare la media dei voti di ogni appello d'esame => 
+SELECT AVG(vote), exam_id
+FROM exam_student
+GROUP BY exam_id;
+4. Contare quanti corsi di laurea ci sono per ogni dipartimento => 
+SELECT COUNT(*), department_id
+FROM degrees
+GROUP BY department_id;
+
+// JOIN //
+1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia => 
+SELECT degrees.id, degrees.name, students.name
+FROM degrees
+INNER JOIN students
+ON degree_id = degrees.id
+WHERE degrees.name = "Corso di Laurea in Economia";
+2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di
+Neuroscienze  => 
+SELECT degrees.name, departments.name
+FROM degrees
+INNER JOIN departments
+ON degrees.department_id = department_id
+WHERE degrees.level = "magistrale" AND departments.name = "Dipartimento di Neuroscienze";
+3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44) => 
+SELECT courses.id AS "id_corso", courses.name AS "nome_corso" , teachers.name AS "nome_insegnante"
+FROM courses
+INNER JOIN course_teacher
+ON course_id = courses.id
+INNER JOIN teachers
+ON teacher_id = teachers.id
+WHERE teachers.id = 44;
+4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui
+sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e
+nome
+
+
+
