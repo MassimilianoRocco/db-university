@@ -60,5 +60,32 @@ WHERE teachers.id = 44;
 sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e
 nome
 
+5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+SELECT courses.name AS "nome_materia", degrees.name AS "nome_corso", teachers.name AS "nome_insegnante"
+FROM courses 
+INNER JOIN degrees 
+ON courses.degree_id = degrees.id
+INNER JOIN course_teacher 
+ON course_id = courses.id
+INNER JOIN teachers
+ON teachers.id = teacher_id; 
+(non so se corretto)
 
+6. Selezionare tutti i docenti che insegnano nel Dipartimento di
+Matematica (54) => 
+SELECT teachers.name AS "Nome_insegnante", departments.name AS "Nome_dipartimento"
+FROM departments
+INNER JOIN degrees 
+ON degrees.department_id = departments.id
+INNER JOIN courses 
+ON courses.degree_id = degrees.id
+INNER JOIN course_teacher
+ON course_teacher.course_id = courses.id
+INNER JOIN teachers
+ON teachers.id = course_teacher.teacher_id
+WHERE departments.name = "Dipartimento di Biologia";
+(no so se corretto)
 
+7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
+per ogni esame, stampando anche il voto massimo. Successivamente,
+filtrare i tentativi con voto minimo 18.
